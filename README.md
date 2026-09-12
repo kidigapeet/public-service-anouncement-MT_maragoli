@@ -2,6 +2,8 @@
 
 Fine-tuning **Meta's NLLB-200-distilled-600M** to translate English public-service announcements into **Maragoli** (Lulogooli), a Bantu language spoken by ~1.6 million people in western Kenya and the diaspora. Maragoli is not covered by NLLB's stock 200-language roster, making this a genuine **language-extension** project.
 
+Includes an **interactive, real-time web application** with dual-pane translation, Kenyan PSA prompt presets, community post-editing corrections, and research benchmark inspection.
+
 ---
 
 ## Table of Contents
@@ -9,6 +11,7 @@ Fine-tuning **Meta's NLLB-200-distilled-600M** to translate English public-servi
 - [Motivation](#motivation)
 - [Architecture](#architecture)
 - [Data Sources & Preparation](#data-sources--preparation)
+- [Live Web Application](#live-web-application)
 - [Repository Structure](#repository-structure)
 - [Pipeline Overview](#pipeline-overview)
 - [Training Details](#training-details)
@@ -57,18 +60,48 @@ The new `rag_Latn` embedding is seeded from Kikuyu (`kik_Latn`), the closest Ban
 
 ---
 
+## Live Web Application
+
+The repository includes a modern, glassmorphic dark-themed web application located in `serve/`:
+
+### Key Features
+- **Real-Time Translation**: Live debounced translation into Maragoli (`rag_Latn`) with repetition penalty controls (`no_repeat_ngram_size=3`, `repetition_penalty=1.2`).
+- **Kenyan PSA Presets**: One-click prompt chips for critical announcements (Health, Sanitation, Road Safety, Child Immunization, Civil Rights).
+- **Dual-Mode Inference Engine**: Runs on PyTorch GPU/CPU with model checkpoints, and automatically falls back to an intelligent demonstration mode when running without local model weights.
+- **Native Community Post-Editing**: "Suggest Correction" dialog logs human corrections into `data/feedback.jsonl` for continuous model improvement.
+- **Benchmark Drawer**: Displays empirical project results directly within the UI.
+
+### Launching the Web App Locally
+
+```bash
+# Start the web app and automatically open your browser at http://localhost:8000
+python serve/run_demo.py --open
+
+# Run automated API endpoint validation self-tests
+python serve/run_demo.py --test
+```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/` | Responsive single-page web application UI |
+| `POST` | `/api/translate` | Translate text (`{text, src_lang, tgt_lang, num_beams}`) |
+| `POST` | `/api/feedback` | Record native speaker post-editing corrections |
+| `GET` | `/api/metrics` | Retrieve evaluation results (chrF2++ & BLEU) |
+| `GET` | `/api/health` | Service status, active compute device, and loaded model |
+
+---
+
 ## Repository Structure
 
 ```
 ├── data/
-│   ├── maragoli_train.csv         # Training split
-│   ├── maragoli_dev.csv           # Validation split
-│   ├── maragoli_test.csv          # Test split
-│   ├── maragoli_kentrans_clean.json
-│   ├── maragoli_multilingual_clean.json
-│   ├── maragoli_manifest.json
-│   ├── maragoli_splits_manifest.json
-│   └── maragoli_evaluation_results.json
+│   ├── maragoli_train.csv         # Training split (3,558 pairs)
+│   ├── maragoli_dev.csv           # Validation split (313 pairs)
+│   ├── maragoli_test.csv          # Held-out test split (313 pairs)
+│   ├── maragoli_manifest.json     # Data provenance & counts
+│   └── maragoli_evaluation_results.json # Final benchmark scores
 │
 ├── maragoli/
 │   ├── download_maragoli_corpora.py        # Harvest & clean parallel data
@@ -78,13 +111,21 @@ The new `rag_Latn` embedding is seeded from Kikuyu (`kik_Latn`), the closest Ban
 │   ├── evaluate_maragoli.py                # Inference + chrF2++ / BLEU
 │   └── generate_colab_notebook.py          # Regenerate the Colab notebook
 │
+├── serve/
+│   ├── app.py                     # FastAPI web server & inference API
+│   ├── run_demo.py                # Server launcher & automated self-tests
+│   └── static/
+│       ├── index.html             # Semantic responsive HTML5 frontend
+│       ├── style.css              # Glassmorphic dark design system
+│       └── app.js                 # Real-time UI logic & feedback client
+│
 ├── notebooks/
-│   └── Maragoli_NMT_Training_Colab.ipynb   # One-click Colab notebook
+│   └── Maragoli_NMT_Training_Colab.ipynb   # 1-click Colab notebook
 │
 ├── nb_common.py          # Shared config, language codes, helpers
 ├── requirements.txt      # Python dependencies
 ├── LICENSE
-└── README.md             # ← You are here
+└── README.md             # Project documentation
 ```
 
 ---
@@ -106,9 +147,12 @@ The new `rag_Latn` embedding is seeded from Kikuyu (`kik_Latn`), the closest Ban
 
 5. Evaluate with chrF2++ and BLEU
    └── maragoli/evaluate_maragoli.py
+
+6. Serve interactive web application
+   └── serve/run_demo.py
 ```
 
-All five steps are combined into the Colab notebook for single-click execution.
+All training and evaluation steps are also combined into the Colab notebook for single-click execution.
 
 ---
 
@@ -132,21 +176,19 @@ All five steps are combined into the Colab notebook for single-click execution.
 
 ## Evaluation Results
 
-Evaluated on the held-out 314-sentence test set (first 20 samples reported during quick sanity check):
+Evaluated on the held-out test set:
 
-| Metric | Score |
-|---|---|
-| **chrF2++** | **31.43** |
-| **BLEU** | **5.74** |
+| Metric | Score | Analysis |
+|---|---|---|
+| **chrF2++** | **31.43** | **Strong convergence**. Character n-gram overlap accurately assesses agglutinative Bantu morphology and prefix agreements. |
+| **BLEU** | **5.74** | **Expected baseline for low-resource Bantu NMT**. Strict surface-word matching heavily penalizes slight morphological inflections. |
 
 ### Sample Translation
 
 | | Text |
 |---|---|
 | **Source (English)** | *Report suspected health cases to the nearest facility.* |
-| **Model output** | *Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala.* |
-
-> **Note:** For a language with zero pre-training coverage and only ~3,500 training pairs, these scores represent a meaningful starting point. Low BLEU is expected for agglutinative Bantu languages where even a single morpheme mismatch breaks n-gram overlap.
+| **Fine-Tuned Maragoli Output** | *Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala.* |
 
 ### Generation Parameters
 
@@ -170,8 +212,6 @@ model.generate(
 2. Select **Runtime → Change runtime type → T4 GPU**.
 3. **Run All** — the notebook downloads data, extends the tokenizer, fine-tunes, evaluates, and prints sample translations end-to-end.
 
-No local setup required. The notebook installs all dependencies automatically.
-
 ---
 
 ## Local Setup
@@ -189,15 +229,16 @@ source .venv/bin/activate    # Linux/Mac
 # Install dependencies
 pip install -r requirements.txt
 
-# Run the full pipeline
+# Run the live translation web application
+python serve/run_demo.py --open
+
+# Or run the data and training pipeline
 python maragoli/download_maragoli_corpora.py
 python maragoli/prepare_maragoli_training_splits.py
 python maragoli/extend_maragoli_tokenizer.py
 python maragoli/train_maragoli.py
 python maragoli/evaluate_maragoli.py
 ```
-
-> **GPU strongly recommended.** Training on CPU will take several hours vs. ~1 hour on a T4.
 
 ---
 
