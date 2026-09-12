@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lulogooli Translate — English to Maragoli Neural Machine Translation</title>
+  <meta name="description" content="Translate Kenyan Public Service Announcements from English into Maragoli (Lulogooli) with fine-tuned NLLB-200 neural machine translation." />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Navbar -->
+    <header class="navbar">
+      <a href="/" class="brand">
+        <div class="brand-icon">📣</div>
+        <div class="brand-text">
+          <h1>Lulogooli Translate</h1>
+          <p>Kenyan PSA Neural Machine Translation</p>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <div id="statusBadge" class="badge-status">
+          <span id="statusText">Model Ready</span>
+        </div>
+        <button id="metricsModalBtn" class="nav-btn" title="View Evaluation Benchmarks">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          Benchmarks
+        </button>
+        <a href="https://github.com/kidigapeet/public-service-anouncement-MT_maragoli" target="_blank" rel="noopener noreferrer" class="nav-btn" title="View on GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-pill">
+        <span>✨ Meta NLLB-200-distilled-600M extended with <strong>rag_Latn</strong></span>
+      </div>
+      <h2 class="hero-title">
+        Bridging Kenyan Public Announcements to <span class="gradient-text">Maragoli</span>
+      </h2>
+      <p class="hero-subtitle">
+        Fine-tuned on community corpora to translate critical healthcare, civil protection, and public service notices into Lulogooli.
+      </p>
+    </section>
+
+    <!-- Main Translation Workspace -->
+    <main class="translation-workspace">
+      <div class="workspace-card" id="workspaceCard">
+        
+        <div class="panes-grid">
+          <!-- Source Pane -->
+          <div class="pane pane-source">
+            <div class="pane-header">
+              <div class="lang-selector">
+                <select id="sourceLangSelect" aria-label="Select source language">
+                  <option value="eng_Latn" selected>English (eng_Latn)</option>
+                  <option value="swh_Latn">Kiswahili (swh_Latn)</option>
+                </select>
+              </div>
+              <button id="clearSourceBtn" class="tool-btn" title="Clear input text">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <textarea 
+              id="sourceInput" 
+              class="pane-textarea" 
+              placeholder="Type or paste a public service announcement here (e.g. Report suspected health cases to the nearest facility)..." 
+              rows="6"
+              spellcheck="false"
+            ></textarea>
+
+            <div class="pane-footer">
+              <span id="sourceCharCount">0 / 500 characters</span>
+              <div class="pane-tools">
+                <button id="pasteBtn" class="tool-btn" title="Paste clipboard text">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Target Pane -->
+          <div class="pane pane-target">
+            <div class="pane-header">
+              <div class="lang-pill-target">
+                <span>Maragoli / Lulogooli</span>
+                <span class="iso">rag_Latn</span>
+              </div>
+              <div class="pane-tools">
+                <button id="suggestCorrectionBtn" class="tool-btn" title="Suggest a better translation">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button id="copyTargetBtn" class="tool-btn" title="Copy translated text">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <textarea 
+              id="targetOutput" 
+              class="pane-textarea" 
+              placeholder="Translation will appear here in Maragoli..." 
+              readonly
+              rows="6"
+            ></textarea>
+
+            <div class="pane-footer">
+              <span id="targetWordCount">0 words</span>
+              <div class="pane-tools">
+                <span id="confidenceTag" class="chip-tag" style="display:none;">High</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workspace Footer Bar -->
+        <div class="workspace-footer">
+          <div class="model-meta-info">
+            <div class="meta-item">
+              <span>Latency:</span>
+              <strong id="latencyDisplay">— ms</strong>
+            </div>
+            <div class="meta-item">
+              <span>Constraint:</span>
+              <span>no-repeat-ngram: 3 | rep-penalty: 1.2</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button id="translateBtn" class="btn-primary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Translate
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Preset Prompt Chips -->
+      <section class="presets-section">
+        <div class="presets-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Quick Public Service Announcements
+        </div>
+        <div class="preset-chips-list" id="presetChipsList">
+          <button class="chip-btn" data-text="Report suspected health cases to the nearest facility.">
+            <span class="chip-tag">Health</span>
+            Report suspected health cases to the nearest facility.
+          </button>
+          <button class="chip-btn" data-text="Wash hands with soap and clean running water.">
+            <span class="chip-tag">Sanitation</span>
+            Wash hands with soap and clean running water.
+          </button>
+          <button class="chip-btn" data-text="Observe traffic rules to prevent road accidents.">
+            <span class="chip-tag">Road Safety</span>
+            Observe traffic rules to prevent road accidents.
+          </button>
+          <button class="chip-btn" data-text="Children must be immunized against diseases at six months.">
+            <span class="chip-tag">Children</span>
+            Children must be immunized against diseases at six months.
+          </button>
+          <button class="chip-btn" data-text="All citizens have a right to clean drinking water.">
+            <span class="chip-tag">Civil</span>
+            All citizens have a right to clean drinking water.
+          </button>
+        </div>
+      </section>
+
+      <!-- Empirical Performance Cards -->
+      <section class="metrics-card">
+        <div class="metrics-header">
+          <div class="metrics-title-group">
+            <h3>Empirical Test Benchmarks (Held-out Set)</h3>
+            <p>Evaluation results achieved by extending NLLB-200 with new token rag_Latn</p>
+          </div>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-box chrf">
+            <span class="label">chrF2++ Metric</span>
+            <span class="value">31.43</span>
+            <span class="hint">Effective capture of agglutinative Bantu morphemes</span>
+          </div>
+          <div class="metric-box bleu">
+            <span class="label">BLEU Score</span>
+            <span class="value">5.74</span>
+            <span class="hint">Rigid n-gram baseline for low-resource pairs</span>
+          </div>
+          <div class="metric-box dataset">
+            <span class="label">Clean Dataset</span>
+            <span class="value">4,184</span>
+            <span class="hint">Deduplicated sentence pairs (KenTrans + Luhya)</span>
+          </div>
+          <div class="metric-box model">
+            <span class="label">Foundation Model</span>
+            <span class="value" style="font-size: 1.35rem; margin-top: 0.2rem;">NLLB-200</span>
+            <span class="hint">facebook/nllb-200-distilled-600M</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Feedback / Correction Modal -->
+  <div class="modal-overlay" id="feedbackModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3>Suggest Native Correction</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Contribute authentic Lulogooli phrasing for human post-editing</p>
+        </div>
+        <button class="modal-close" id="closeFeedbackModal">&times;</button>
+      </div>
+
+      <form id="feedbackForm">
+        <div class="form-group">
+          <label for="feedbackSource">Source Announcement</label>
+          <input type="text" id="feedbackSource" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+          <label for="feedbackOriginal">Model Translation</label>
+          <input type="text" id="feedbackOriginal" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+          <label for="feedbackCorrection">Your Maragoli (Lulogooli) Correction *</label>
+          <textarea id="feedbackCorrection" class="form-control" rows="3" placeholder="Enter the accurate Maragoli translation..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="feedbackNotes">Notes / Dialect context (Optional)</label>
+          <input type="text" id="feedbackNotes" class="form-control" placeholder="e.g. South Maragoli dialect variation" />
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelFeedbackBtn">Cancel</button>
+          <button type="submit" class="btn-primary" id="submitFeedbackBtn">Submit Correction</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Benchmarks Detail Modal -->
+  <div class="modal-overlay" id="benchmarksModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3>Model Training & Benchmark Details</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Research specifications and evaluation breakdown</p>
+        </div>
+        <button class="modal-close" id="closeBenchmarksModal">&times;</button>
+      </div>
+
+      <div style="font-size: 0.88rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.85rem;">
+        <p><strong style="color: var(--text-main);">Language Extension:</strong> Maragoli (Lulogooli, ISO 639-3: <code>rag</code>) was introduced into NLLB vocabulary using special token <code>rag_Latn</code>. The embedding weights were seeded from Kikuyu (<code>kik_Latn</code>) with 1% Gaussian noise.</p>
+        <p><strong style="color: var(--text-main);">Dataset Splits:</strong> 4,184 total parallel pairs (3,558 Train, 313 Dev, 313 Test) split in an 85 / 7.5 / 7.5 ratio.</p>
+        <p><strong style="color: var(--text-main);">Generation Constraints:</strong> Tested beam search with <code>no_repeat_ngram_size=3</code> and <code>repetition_penalty=1.2</code> to eliminate cyclic Bantu prefix stuttering.</p>
+        <p><strong style="color: var(--text-main);">Academic Context:</strong> Data Science Project, USIU-Africa, 2026.</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="closeBenchmarksBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JavaScript Application Logic -->
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
-# Fine-tuning NLLB-200 for Ekegusii.
-# The demo service has its own, narrower list in serve/requirements.txt.
+# Dependencies for English -> Maragoli Neural Machine Translation & Live Web App
+
+# Core Modeling & Inference
 torch
 transformers
 sentencepiece
@@ -8,14 +9,12 @@ pandas
 numpy
 tqdm
 
-# ekegusii/ collection scripts
-requests
-beautifulsoup4
-
-# tests/verify_hf_uploads.py, tests/identify_hf_models.py
+# Hugging Face ecosystem
 huggingface_hub
+datasets
 
-# docs/ generators. Optional: only needed to rebuild the PDFs and the poster.
-markdown
-playwright
-pypdf
+# Web Application & Demo Service
+fastapi
+uvicorn
+pydantic
+requests
