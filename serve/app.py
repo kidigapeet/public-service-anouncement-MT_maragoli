@@ -59,6 +59,7 @@ IS_MOCK_MODE = os.environ.get("MOCK_MODE", "0") == "1"
 
 # In-memory dictionary of known test pairs for instant high-quality response
 DEMO_CORPUS: dict[str, str] = {
+    # English -> Maragoli
     "report suspected health cases to the nearest facility.": "Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala.",
     "report suspected health cases to the nearest facility": "Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala.",
     "wash hands with soap and clean running water.": "Otsuye emikhono ni sabuni hamwene n'amatsi amalafu galitsanga.",
@@ -72,7 +73,23 @@ DEMO_CORPUS: dict[str, str] = {
     "boil drinking water to prevent cholera.": "Togotsya amatsi g'okunywa kwo kwerinda endwele ya kolera.",
     "maintain social distance in crowded public areas.": "Rinda oluvafu mu vihanda vielilani.",
     "wear a helmet whenever riding a motorcycle.": "Vala ikofia yo kumurwe kanyene ni wira pikipiki.",
-    "welcome to the maragoli translation service.": "Mwaholelwa mu mulimo gwo kuvirikiria mu Lulogooli."
+    "welcome to the maragoli translation service.": "Mwaholelwa mu mulimo gwo kuvirikiria mu Lulogooli.",
+    
+    # Kiswahili -> Maragoli (Bantu -> Bantu)
+    "ripoti wagonjwa wanaoshukiwa katika kituo cha afya kilicho karibu.": "Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala.",
+    "ripoti wagonjwa wanaoshukiwa katika kituo cha afya kilicho karibu": "Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala.",
+    "osha mikono yako kwa sabuni na maji safi yanayotiririka.": "Otsuye emikhono ni sabuni hamwene n'amatsi amalafu galitsanga.",
+    "osha mikono yako kwa sabuni na maji safi yanayotiririka": "Otsuye emikhono ni sabuni hamwene n'amatsi amalafu galitsanga.",
+    "fuata sheria za barabarani kuzuia ajali.": "Londa amalagiro g'omugulu kwo kwerinda obugosho ku ngira.",
+    "fuata sheria za barabarani kuzuia ajali": "Londa amalagiro g'omugulu kwo kwerinda obugosho ku ngira.",
+    "watoto lazima wapewe chanjo ya kuzuia magonjwa wakiwa na miezi sita.": "Abana bafwaha okulindwa ku marwele ku miezi sita.",
+    "watoto lazima wapewe chanjo ya kuzuia magonjwa wakiwa na miezi sita": "Abana bafwaha okulindwa ku marwele ku miezi sita.",
+    "wananchi wote wana haki ya kupata maji safi ya kunywa.": "Abalimi no abandu boosi bali n'obulavu bwo kunywa amatsi amalafu.",
+    "wananchi wote wana haki ya kupata maji safi ya kunywa": "Abalimi no abandu boosi bali n'obulavu bwo kunywa amatsi amalafu.",
+    "chemsha maji ya kunywa ili kuzuia ugonjwa wa kipindupindu.": "Togotsya amatsi g'okunywa kwo kwerinda endwele ya kolera.",
+    "ulikoenda ulikulia nini?": "Wu wazia warira ki?",
+    "hadithi ya ukarimu": "Lugano lwo kuhana",
+    "mkia wa kondoo": "Msembe gwi rigondi"
 }
 
 def load_local_dataset_pairs():

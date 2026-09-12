@@ -135,16 +135,54 @@ document.addEventListener('DOMContentLoaded', () => {
   translateBtn.addEventListener('click', performTranslation);
 
   // -------------------------------------------------------------------------
-  // Preset Chips
+  // Preset Chips & Language Switching
   // -------------------------------------------------------------------------
-  presetChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const text = chip.getAttribute('data-text');
-      sourceInput.value = text;
-      sourceCharCount.textContent = `${text.length} / 500 characters`;
-      performTranslation();
+  const PRESETS_DATA = {
+    eng_Latn: [
+      { tag: "Health", text: "Report suspected health cases to the nearest facility." },
+      { tag: "Sanitation", text: "Wash hands with soap and clean running water." },
+      { tag: "Road Safety", text: "Observe traffic rules to prevent road accidents." },
+      { tag: "Children", text: "Children must be immunized against diseases at six months." },
+      { tag: "Civil", text: "All citizens have a right to clean drinking water." }
+    ],
+    swh_Latn: [
+      { tag: "Afya", text: "Ripoti wagonjwa wanaoshukiwa katika kituo cha afya kilicho karibu." },
+      { tag: "Usafi", text: "Osha mikono yako kwa sabuni na maji safi yanayotiririka." },
+      { tag: "Usalama", text: "Fuata sheria za barabarani kuzuia ajali." },
+      { tag: "Watoto", text: "Watoto lazima wapewe chanjo ya kuzuia magonjwa wakiwa na miezi sita." },
+      { tag: "Haki za Raia", text: "Wananchi wote wana haki ya kupata maji safi ya kunywa." },
+      { tag: "Simulizi", text: "Ulikoenda ulikulia nini?" }
+    ]
+  };
+
+  const presetChipsList = document.getElementById('presetChipsList');
+
+  function renderPresets(lang) {
+    const items = PRESETS_DATA[lang] || PRESETS_DATA.eng_Latn;
+    presetChipsList.innerHTML = '';
+    items.forEach(item => {
+      const btn = document.createElement('button');
+      btn.className = 'chip-btn';
+      btn.setAttribute('data-text', item.text);
+      btn.innerHTML = `<span class="chip-tag">${item.tag}</span> ${item.text}`;
+      btn.addEventListener('click', () => {
+        sourceInput.value = item.text;
+        sourceCharCount.textContent = `${item.text.length} / 500 characters`;
+        performTranslation();
+      });
+      presetChipsList.appendChild(btn);
     });
+  }
+
+  sourceLangSelect.addEventListener('change', () => {
+    const selected = sourceLangSelect.value;
+    renderPresets(selected);
+    if (sourceInput.value.trim().length > 0) {
+      performTranslation();
+    }
   });
+
+  renderPresets(sourceLangSelect.value);
 
   // -------------------------------------------------------------------------
   // Tools & Actions

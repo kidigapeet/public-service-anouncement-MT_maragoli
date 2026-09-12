@@ -1,11 +1,22 @@
 {
-  "total_pairs": 4184,
-  "train_count": 3558,
-  "dev_count": 313,
-  "test_count": 313,
+  "primary_system": "Kiswahili -> Maragoli (swh_Latn -> rag_Latn)",
+  "baseline_system": "English -> Maragoli (eng_Latn -> rag_Latn)",
+  "swahili_maragoli": {
+    "total_pairs": 3497,
+    "train_count": 2973,
+    "dev_count": 262,
+    "test_count": 262
+  },
+  "english_maragoli": {
+    "total_pairs": 398,
+    "train_count": 340
+  },
   "files": {
     "train": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\maragoli_train.csv",
     "dev": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\maragoli_dev.csv",
-    "test": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\maragoli_test.csv"
+    "test": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\maragoli_test.csv",
+    "swahili_train": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\swahili_maragoli_train.csv",
+    "swahili_dev": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\swahili_maragoli_dev.csv",
+    "swahili_test": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\swahili_maragoli_test.csv"
   }
 }
