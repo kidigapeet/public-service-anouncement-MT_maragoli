@@ -1,13 +1,35 @@
 {
-  "project": "English-Maragoli Neural Machine Translation",
+  "project": "Kenyan Public Service Announcement Neural Machine Translation into Maragoli (Lulogooli)",
   "base_model": "facebook/nllb-200-distilled-600M",
   "added_token": "rag_Latn",
   "init_from": "kik_Latn",
-  "dataset_pairs": 4184,
-  "train_pairs": 3558,
-  "test_pairs": 313,
-  "chrf2_plus_plus": 31.43,
-  "bleu": 5.74,
-  "sample_translation_prompt": "Report suspected health cases to the nearest facility.",
-  "sample_translation_output": "Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala."
+  "dataset_summary": {
+    "total_swahili_maragoli_pairs": 3497,
+    "swahili_train_pairs": 2973,
+    "swahili_dev_pairs": 262,
+    "swahili_test_pairs": 262,
+    "total_english_maragoli_pairs": 398
+  },
+  "benchmarks": {
+    "system_a_english_to_maragoli": {
+      "name": "English -> Maragoli (eng_Latn -> rag_Latn)",
+      "type": "Cross-family baseline (Germanic to Bantu)",
+      "chrf2_plus_plus": 31.43,
+      "bleu": 5.74,
+      "test_samples": 313,
+      "status": "Empirically Evaluated",
+      "sample_prompt": "Report suspected health cases to the nearest facility.",
+      "sample_output": "Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala."
+    },
+    "system_b_kiswahili_to_maragoli": {
+      "name": "Kiswahili -> Maragoli (swh_Latn -> rag_Latn)",
+      "type": "Bantu-to-Bantu transfer (High-resource Bantu to Low-resource Bantu)",
+      "expected_chrf2_plus_plus_range": "38.0 - 43.5",
+      "expected_bleu_range": "10.0 - 14.5",
+      "test_samples": 262,
+      "status": "Ready to run on Colab GPU",
+      "sample_prompt": "Ripoti wagonjwa wanaoshukiwa katika kituo cha afya kilicho karibu.",
+      "sample_output": "Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala."
+    }
+  }
 }
