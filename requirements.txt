@@ -1,0 +1,21 @@
+# Fine-tuning NLLB-200 for Ekegusii.
+# The demo service has its own, narrower list in serve/requirements.txt.
+torch
+transformers
+sentencepiece
+sacrebleu
+pandas
+numpy
+tqdm
+
+# ekegusii/ collection scripts
+requests
+beautifulsoup4
+
+# tests/verify_hf_uploads.py, tests/identify_hf_models.py
+huggingface_hub
+
+# docs/ generators. Optional: only needed to rebuild the PDFs and the poster.
+markdown
+playwright
+pypdf

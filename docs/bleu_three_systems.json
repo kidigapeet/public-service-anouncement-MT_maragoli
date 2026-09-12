@@ -1,0 +1,107 @@
+[
+ {
+  "system": "stock",
+  "direction": "eng->guz",
+  "test_set": "bible",
+  "BLEU": 0.83,
+  "chrF2++": 14.88
+ },
+ {
+  "system": "stock",
+  "direction": "eng->guz",
+  "test_set": "lughayangu_contemporary",
+  "BLEU": 0.07,
+  "chrF2++": 11.41
+ },
+ {
+  "system": "stock",
+  "direction": "eng->guz",
+  "test_set": "psa_ke_heldout",
+  "BLEU": 1.63,
+  "chrF2++": 14.56
+ },
+ {
+  "system": "stock",
+  "direction": "swh->guz",
+  "test_set": "bible",
+  "BLEU": 1.2,
+  "chrF2++": 14.65
+ },
+ {
+  "system": "stock",
+  "direction": "swh->guz",
+  "test_set": "psa_ke_heldout",
+  "BLEU": 1.01,
+  "chrF2++": 14.13
+ },
+ {
+  "system": "stage1",
+  "direction": "eng->guz",
+  "test_set": "bible",
+  "BLEU": 19.75,
+  "chrF2++": 49.66
+ },
+ {
+  "system": "stage1",
+  "direction": "eng->guz",
+  "test_set": "lughayangu_contemporary",
+  "BLEU": 1.27,
+  "chrF2++": 28.97
+ },
+ {
+  "system": "stage1",
+  "direction": "eng->guz",
+  "test_set": "psa_ke_heldout",
+  "BLEU": 2.54,
+  "chrF2++": 23.96
+ },
+ {
+  "system": "stage1",
+  "direction": "swh->guz",
+  "test_set": "bible",
+  "BLEU": 19.79,
+  "chrF2++": 49.11
+ },
+ {
+  "system": "stage1",
+  "direction": "swh->guz",
+  "test_set": "psa_ke_heldout",
+  "BLEU": 1.77,
+  "chrF2++": 24.49
+ },
+ {
+  "system": "stage2",
+  "direction": "eng->guz",
+  "test_set": "bible",
+  "BLEU": 19.33,
+  "chrF2++": 48.95
+ },
+ {
+  "system": "stage2",
+  "direction": "eng->guz",
+  "test_set": "lughayangu_contemporary",
+  "BLEU": 1.21,
+  "chrF2++": 29.37
+ },
+ {
+  "system": "stage2",
+  "direction": "eng->guz",
+  "test_set": "psa_ke_heldout",
+  "BLEU": 7.21,
+  "chrF2++": 34.93
+ },
+ {
+  "system": "stage2",
+  "direction": "swh->guz",
+  "test_set": "bible",
+  "BLEU": 19.79,
+  "chrF2++": 48.8
+ },
+ {
+  "system": "stage2",
+  "direction": "swh->guz",
+  "test_set": "psa_ke_heldout",
+  "BLEU": 6.87,
+  "chrF2++": 34.5
+ }
+]

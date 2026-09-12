@@ -1,0 +1,52 @@
+# Virtual environment
+.venv/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+
+# Trained models, checkpoints and figures - far too large for git.
+# The notebooks write everything here; nothing in it needs to be versioned.
+artifacts/
+
+# Generation checkpoints and logs
+data/lughayangu_cache.json
+*.log
+
+# Manifests ARE committed - they document how each dataset was built, and the
+# notebooks read them. Do not add a blanket *.json rule here again.
+
+# IDE and system files
+.idea/
+.vscode/
+.system_generated/
+
+# Deployment secrets. serve/.env holds a Hugging Face token - never commit it.
+# serve/.env.example is the committed template.
+**/serve/.env
+
+# Office lock files (created while a .pptx or .docx is open)
+~$*
+
+# Pruned notebooks kept locally for reference, not part of the released pipeline
+**/notebooks/_removed/
+
+# Scratch
+_to_delete/
+__probe.txt
+
+# The corpus generation pipeline is a separate project and is not part of this
+# repository. If a copy is sitting in this folder, it is a leftover: do not
+# track it.
+corpus_generation/
+
+# Internal write-ups and the script that typesets them. Kept outside the
+# repository; the README is the public write-up.
+docs/IMPLEMENTATION_REPORT.*
+docs/PRESENTATION_BRIEF.*
+docs/gen_brief_pdf.py

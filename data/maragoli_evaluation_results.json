@@ -1,0 +1,13 @@
+{
+  "project": "English-Maragoli Neural Machine Translation",
+  "base_model": "facebook/nllb-200-distilled-600M",
+  "added_token": "rag_Latn",
+  "init_from": "kik_Latn",
+  "dataset_pairs": 4184,
+  "train_pairs": 3558,
+  "test_pairs": 313,
+  "chrf2_plus_plus": 31.43,
+  "bleu": 5.74,
+  "sample_translation_prompt": "Report suspected health cases to the nearest facility.",
+  "sample_translation_output": "Rekhodia avandu aviguliri avuguliri ku likambasi li veye halala."
+}

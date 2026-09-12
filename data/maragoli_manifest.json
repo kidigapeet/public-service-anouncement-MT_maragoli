@@ -1,0 +1,11 @@
+{
+  "language": "Maragoli / Lulogooli",
+  "iso_code": "rag_Latn / llg",
+  "kentrans_pairs_count": 3692,
+  "luhya_multilingual_pairs_count": 400,
+  "total_acquired_pairs": 4092,
+  "output_files": [
+    "maragoli_kentrans_clean.json",
+    "maragoli_multilingual_clean.json"
+  ]
+}

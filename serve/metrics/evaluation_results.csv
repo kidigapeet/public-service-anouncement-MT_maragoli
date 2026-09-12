@@ -1,0 +1,6 @@
+direction,test set,n,stock chrF,stage1 chrF,stage2 chrF,mixed chrF
+eng->guz,bible,1459,14.88,49.66,48.95,49.81
+eng->guz,lughayangu_contemporary,200,11.41,28.97,29.37,32.98
+eng->guz,psa_ke_heldout,570,14.56,23.96,34.93,40.97
+swh->guz,bible,1463,14.65,49.11,48.80,49.30
+swh->guz,psa_ke_heldout,371,14.13,24.49,34.50,39.61

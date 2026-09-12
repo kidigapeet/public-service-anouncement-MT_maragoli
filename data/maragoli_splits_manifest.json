@@ -1,0 +1,11 @@
+{
+  "total_pairs": 4184,
+  "train_count": 3558,
+  "dev_count": 313,
+  "test_count": 313,
+  "files": {
+    "train": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\maragoli_train.csv",
+    "dev": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\maragoli_dev.csv",
+    "test": "C:\\Users\\kidig\\OneDrive\\Desktop\\datascienceproj\\public-service-anouncement-MT-main\\data\\maragoli_test.csv"
+  }
+}
